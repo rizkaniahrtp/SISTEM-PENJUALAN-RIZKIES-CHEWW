@@ -39,7 +39,7 @@ class PembayaranController extends Controller
     {
         $transaksi = Transaksi::doesntHave('pembayaran')
         ->where('status', '!=', 'dibatalkan')
-        ->wheere('status', '!=', 'selesai')->get();
+        ->where('status', '!=', 'selesai')->get();
 
         return view('admin.pembayaran.tambah', compact('transaksi'));
     }

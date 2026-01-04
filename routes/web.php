@@ -81,7 +81,7 @@ Route::get('/pembayaran/edit/{id}', [PembayaranController::class,'edit'])->middl
 Route::put('/pembayaran/update/{id}', [PembayaranController::class,'update'])->middleware('peran:admin');
 Route::delete('/pembayaran/delete/{id}', [PembayaranController::class,'delete'])->middleware('peran:admin');
 Route::put('/pembayaran/update_status/{id}', [PembayaranController::class,'update_status'])->middleware('peran:admin');
-Route::put('/pemabayaran/update_metode/{id}', [PembayaranController::class,'update_metode'])->middleware('peran:admin');
+Route::put('/pembayaran/update_metode/{id}', [PembayaranController::class,'update_metode'])->middleware('peran:admin');
 
 // PROMOSI
 Route::get('/promosi', [PromosiController::class, 'index'])->middleware('peran:admin');
