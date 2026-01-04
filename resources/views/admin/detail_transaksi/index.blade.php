@@ -7,7 +7,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-3 text-gray-800">Rizkies Cheww Store🍪✨</h1>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <a href="//detailTransaksi/tambah" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm">
+                        <a href="/detailTransaksi/tambah" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm">
                             <i class="fas fa-plus fa-sm text-black-50"></i> Tambah Detail Transaksi
                         </a>
                         <form action="/detailTransaksi" method="get" class="d-none d-sm-inline-block form-inline ml-auto my-2 my-md-0 mw-100 navbar-search">
