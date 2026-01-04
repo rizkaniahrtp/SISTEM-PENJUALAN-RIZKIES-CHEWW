@@ -13,7 +13,7 @@
             </div>
 
             <div class="card-body">
-                <form action="/detail_transaksi/store/" method="POST" enctype="multipart/form-data">
+                <form action="/detailTransaksi/tambah" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
