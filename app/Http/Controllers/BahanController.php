@@ -34,7 +34,8 @@ class BahanController extends Controller
      */
     public function tambah()
     {
-        return('admin.bahan.tambah');
+        $supplier = Supplier::all();
+        return view('admin.bahan.tambah', compact('supplier'));
     }
 
     /**
