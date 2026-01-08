@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nama_user');
             $table->string('email')->unique();
-            $table->string('no_hp');
+            $table->string('no_hp')->nullable();
             $table->string('password');
             $table->enum('peran', ['admin', 'pengunjung'])->default('pengunjung');
-            $table->string('foto_profil');
-            $table->longText('alamat');
+            $table->string('foto_profil')->nullable();
+            $table->longText('alamat')->nullable();
             $table->timestamps();
         });
     }

@@ -70,23 +70,23 @@
                     <div class="col-md-6">
                         <div class="wow fadeInUp" data-wow-delay="0.2s">
                             <form action="/inbox/store" method="POST">
-                                @csrf
+                                @csrf 
                                 <div class="row g-3">
                                     <div class="col-md-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Name">
+                                            <input type="text" class="form-control" id="name" name="nama" placeholder="Full Name" required>
                                             <label for="name">Full Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Email">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                             <label for="email">Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
+                                            <textarea class="form-control" placeholder="Message" id="message" name="pesan" style="height: 100px" required></textarea>
                                             <label for="message">Message</label>
                                         </div>
                                     </div>
