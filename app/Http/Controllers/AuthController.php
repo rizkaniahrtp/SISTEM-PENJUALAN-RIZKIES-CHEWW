@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function registerView()
     {
         if(Auth::check()){
-            return redirect('/');
+            return $this->redirectBasedOnRole();
         }
 
         return view("page.register");
@@ -21,7 +21,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         if(Auth::check()){
-            return back();
+            return $this->redirectBasedOnRole();
         }
         
         $request->validate([
@@ -40,13 +40,13 @@ class AuthController extends Controller
             'alamat' => null,
         ]);
 
-        return redirect('/register')->with('success', 'Registrasi berhasil! Silakan Login.');
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan Login.');
     }
 
     public function login(Request $request)
     {
         if(Auth::check()){
-            return back();
+            return $this->redirectBasedOnRole();
         }
         return view('page.login');
     }
@@ -54,7 +54,7 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         if(Auth::check()){
-            return back();
+            return $this->redirectBasedOnRole();
         }
 
         $credentials = $request->validate([
@@ -68,14 +68,7 @@ class AuthController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); 
-            
-            $user = Auth::user();
-
-            if($user->peran !== 'pengunjung'){
-                return redirect()->intended('dashboard');
-            }
-            return redirect()->route('home');
-
+            return $this->redirectBasedOnRole();
         } 
 
         return back()->withErrors([
@@ -88,6 +81,17 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/login')->with('success','Anda berhasil logout');
+    }
+
+    protected function redirectBasedOnRole()
+    {
+        $user = Auth::user();
+        
+        if ($user->peran !== 'pengunjung') {
+            return redirect()->intended('dashboard');
+        }
+        
+        return redirect()->route('home');
     }
 }

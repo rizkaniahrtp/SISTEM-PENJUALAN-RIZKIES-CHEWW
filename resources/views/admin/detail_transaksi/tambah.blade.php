@@ -13,7 +13,7 @@
             </div>
 
             <div class="card-body">
-                <form action="/detailTransaksi/tambah" method="POST" enctype="multipart/form-data">
+                <form action="/detailTransaksi/tambah" method="POST">
                 @csrf
 
                 <div class="mb-3">
@@ -21,8 +21,8 @@
                     <select name="transaksi_id" class="form-control @error('transaksi_id') is-invalid @enderror" required>
                         <option value="">-- Pilih ID Transaksi --</option>
                         @foreach($transaksi as $t)
-                            <option value="{{ $t->id }}">
-                                ID: {{ $t->id }} - {{ $t->user->name ?? 'Guest' }} (Status: {{ $t->status }})
+                            <option value="{{ $t->id }}" {{ old('transaksi_id') == $t->id ? 'selected' : '' }}>
+                                ID: {{ $t->id }} - {{ $t->user->nama_user ?? 'Guest' }} (Status: {{ ucfirst($t->status) }})
                             </option>
                         @endforeach
                     </select>
@@ -36,8 +36,8 @@
                     <select name="produk_id" class="form-control @error('produk_id') is-invalid @enderror" required>
                     <option value="">-- Pilih Produk --</option>
                     @foreach($produk as $p)
-                        <option value="{{ $p->id }}">
-                            {{ $p->nama_produk }} (Stok: {{ $p->stok }} - Rp {{ number_format($p->harga) }})
+                        <option value="{{ $p->id }}" {{ old('produk_id') == $p->id ? 'selected' : '' }}>
+                            {{ $p->nama_produk }} (Stok: {{ $p->stok }} - Rp {{ number_format($p->harga, 0, ',', '.') }})
                         </option>
                     @endforeach
                 </select>

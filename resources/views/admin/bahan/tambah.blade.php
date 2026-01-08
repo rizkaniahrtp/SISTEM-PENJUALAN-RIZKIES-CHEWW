@@ -23,7 +23,7 @@
             @endif
 
             <div class="card-body">
-                <form action="/bahan/tambah" method="POST" enctype="multipart/form-data">
+                <form action="/bahan/tambah" method="POST">
                 @csrf
 
                 <div class="mb-3">
@@ -49,7 +49,7 @@
 
                 <div class="mb-3">
                     <label>Stok</label>
-                    <input type="decimal" name="stok" class="form-control" value="{{ old('stok') }}" required>
+                    <input type="number" name="stok" class="form-control" value="{{ old('stok') }}" required>
                     @error('stok')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -57,12 +57,12 @@
 
                 <div class="mb-3">
                     <label>Satuan</label>
-                    <select class="form-select @error('satuan') is-invalid @enderror" name="satuan" value="{{ old('satuan') }}" required>
-                        <option selected disabled>-- Pilih Satuan --</option>
-                        <option value="kg">Kg</option> 
-                        <option value="gram">Gram</option>  
-                        <option value="liter">Liter</option>  
-                        <option value="pcs">Pcs</option>    
+                    <select class="form-select @error('satuan') is-invalid @enderror" name="satuan" required>
+                        <option selected disabled value="">-- Pilih Satuan --</option>
+                        <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : '' }}>Kg</option> 
+                        <option value="gram" {{ old('satuan') == 'gram' ? 'selected' : '' }}>Gram</option>  
+                        <option value="liter" {{ old('satuan') == 'liter' ? 'selected' : '' }}>Liter</option>  
+                        <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : '' }}>Pcs</option>    
                     </select>
                     @error('satuan')
                         <div class="invalid-feedback">{{ $message }}</div>

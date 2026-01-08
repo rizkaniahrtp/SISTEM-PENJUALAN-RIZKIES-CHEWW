@@ -55,6 +55,7 @@ class ProdukController extends Controller
             'stok' => 'required|numeric',
             'status' => 'required',
             'deskripsi' => 'required',
+            'foto_produk'=> 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $foto = $request->file('foto_produk');

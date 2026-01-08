@@ -75,19 +75,21 @@
                                     </tbody>
                                 @else
                                 @foreach ($inbox_terbaru as $inbox)
-                                    <a class="dropdown-item d-flex align-items-center">
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="{{ asset('/image.foto-profil.jpg') }}" alt="">
-                                            <div class="status-indicator bg-success"></div>    
+                                            @php
+                                            $nama = $inbox->nama ?? 'user';
+                                            $avatarLink = 'https://ui-avatars.com/api/?name=' . urlencode($nama) . '&background=random&color=fff&size=64';
+                                            @endphp
+                                            <img class="rounded-circle" src="{{ $avatarLink }}" alt="{{ $nama }}">
                                         </div>
 
                                         <div class="font-weight-bold">
-                                            <div class="text-truncate" style="max-width: 240px;">
-                                                {{ $inbox->pesan }}
-                                            </div>
-
-                                            <div class="small text-gray-500">
+                                            <div class="text-truncate">
                                                 {{ $inbox->nama }} . {{ $inbox->created_at->diffForHumans() }}
+                                            </div>                                            
+                                            <div class="small text-gray-500" style="max-width: 240px;">
+                                                {{ $inbox->pesan }}
                                             </div>                                            
                                         </div>
                                     </a>                                
@@ -104,8 +106,17 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->nama_user }}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{ auth()->user()->foto_profil ? asset('image/user/' . auth()->user()->foto_profil) : asset('image/foto-profil.jpg') }}">
+                                @php
+                                $user = auth()->user();
+                                $path_baru = 'image/user/' . $user->foto_profil;
+                                if(!empty($user->foto_profil) && file_exists(public_path($path_baru))){
+                                    $src = asset($path_baru);
+                                } else{
+                                    $src = 'https://ui-avatars.com/api/?name=' . urlencode($currentUser->nama_user) . '&background=random&color=fff';
+                                }
+                                @endphp
+
+                                <img class="img-profile rounded-circle" src="{{ $src }}" style="object-fit: cover;">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in bg-warning"

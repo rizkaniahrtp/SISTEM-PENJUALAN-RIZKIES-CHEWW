@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\Produk;
@@ -69,15 +70,15 @@ class HomeController extends Controller
     }
 
 
-    public function update_profil(Request $request, $id)
+    public function update_profil(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
             'nama_user'=> 'required',
             'no_hp'=> 'required',
             'alamat'=> 'required',
         ]);
-
-        $user = User::findOrFail( $id );
+        
         $user->nama_user = $request->input('nama_user');
         $user->email = $request->input('email');
         $user->no_hp = $request->input('no_hp');
@@ -99,23 +100,21 @@ class HomeController extends Controller
         return view('page.profil.ubah_password');
     }
 
-    public function ubah_password(Request $request, $id)
+    public function ubah_password(Request $request)
     {
         $request->validate([
             'pw_lama'=> 'required|min:5',
             'pw_new'=> 'required|min:5',
         ]);
 
-        $user = User::findOrFail( $id );
-        $ubahPasswordIsValid = Hash::check($request->input('pw_lama'), $user->password);
+        $user = Auth::user();
 
-        if( $ubahPasswordIsValid ) {
-            $user->password = Hash::make($request->input('pw_new'));
-            $user->save();
-
-            return back()->with('success','Passowrd berhasil diubah');
+        if(!Hash::check($request->pw_lama, $user->password)){
+            return back()->with('error','Password salah!');
         }
+        $user->password = Hash::make($request->pw_new);
+        $user->save();
 
-        return back()->with('error','Password gagal diubahe');
+        return back()->with('success','Password berhasil diubah');
     }
 }

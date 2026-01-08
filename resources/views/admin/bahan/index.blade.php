@@ -7,7 +7,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-3 text-gray-800">Rizkies Cheww Store🍪✨</h1>
                      
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <a href="/bahan/tambah" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm">
                             <i class="fas fa-plus fa-sm text-black-50"></i> Tambah Bahan
                         </a>                        
@@ -32,6 +32,16 @@
                                 title: "Berhasil",
                                 text: "{{ session()->get('success') }}",
                                 icon: "success"
+                            });
+                        </script>
+                    @endif
+
+                    @if (session('error'))
+                        <script>
+                            Swal.fire({
+                                title: "Gagal",
+                                text: "{{ session()->get('error') }}",
+                                icon: "error"
                             });
                         </script>
                     @endif

@@ -22,6 +22,16 @@
                 </script>
             @endif
 
+            @if (session('error'))
+                <script>
+                    Swal.fire({
+                        title: "Gagal",
+                        text: "{{ session()->get('error') }}",
+                        icon: "error"
+                    });
+                </script>
+            @endif
+
             <div class="card-body">
                 <form action="/admin/ubah_password/{{ auth()->user()->id }}" method="POST" enctype="multipart/form-data">
                 @csrf

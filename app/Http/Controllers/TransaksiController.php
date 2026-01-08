@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detailTransaksi;
+use App\Models\DetailTransaksi;
 use App\Models\Transaksi;
 use App\Models\User;
 use App\Models\Promosi;
@@ -17,7 +17,8 @@ class TransaksiController extends Controller
     {
         $query = $request->input('keywords');
         if ($query){
-            $transaksi = Transaksi::when($query, function ($queryBuilder) use ($query) {
+            $transaksi = Transaksi::when(
+                $query, function ($queryBuilder) use ($query) {
                 $queryBuilder->where('status','LIKE','%'.$query.'%')
                 ->orWhereHas('user', function ($keywords) use ($query) {
                     $keywords->where ('nama_user', 'LIKE', '%'.$query.'%');
@@ -51,7 +52,7 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        $request-> validate([
+        $request->validate([
             'user_id' => 'required',
             'promosi_id'=> 'nullable',
             'metode_pengantaran'=> 'required',
@@ -76,6 +77,7 @@ class TransaksiController extends Controller
         }
 
         $total_harga = max($subtotal - $potongan_harga, 0);
+        $detail_pengantaran = $request->metode_pengantaran == 'diantar' ? $request->detail_pengantaran : 'Diambil di Toko';
 
         Transaksi::create([
             'user_id' => $request->user_id,
@@ -96,7 +98,7 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        $transaksi = Transaksi::with(['user', 'detail_transaksi.produk', 'pembayaran', 'promosi'])->findOrFail( $id );
+        $transaksi = Transaksi::with(['user', 'detail_transaksis.produk', 'pembayaran', 'promosi'])->findOrFail( $id );
         return view('admin.transaksi.detail', compact('transaksi'));
     }
 

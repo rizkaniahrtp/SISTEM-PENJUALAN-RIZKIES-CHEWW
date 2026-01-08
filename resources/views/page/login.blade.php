@@ -33,6 +33,15 @@
             });
         </script>
     @endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: "Berhasil",
+                text: "{{ session()->get('success') }}",
+                icon: "success"
+            });
+        </script>        
+    @endif
         
 
     <div class="container">

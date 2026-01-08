@@ -126,8 +126,6 @@ class PembayaranController extends Controller
             $pembayaran->transaksi->update(['status' => 'dibatalkan']);
         }
 
-        $pembayaran->save();
-
         return redirect('/pembayaran')->with('success','Data Berhasil Diupdate!');
     }
 
@@ -142,15 +140,15 @@ class PembayaranController extends Controller
      public function update_status(Request $request, $id)
     {
         $pembayaran = Pembayaran::findOrFail($id);
-        $pembayaran->update([
+        $dataUpdate = [
             'status' => $request->status
-        ]);
+        ];
 
         if ($request->status == 'berhasil' && empty($pembayaran->tanggal_bayar)) {
             $dataUpdate['tanggal_bayar'] = now();
         }
         
-        $pembayaran->save();
+        $pembayaran->update($dataUpdate);
 
         return redirect('/pembayaran')->with('success', 'Status Berhasil Diupdate!');
     }
@@ -160,9 +158,7 @@ class PembayaranController extends Controller
         $pembayaran = Pembayaran::findOrFail($id);
         $pembayaran->update([
             'metode' => $request->metode
-        ]);
-        
-        $pembayaran->save();
+        ]);        
 
         return redirect('/pembayaran')->with('success', 'Status Berhasil Diupdate!');
     }

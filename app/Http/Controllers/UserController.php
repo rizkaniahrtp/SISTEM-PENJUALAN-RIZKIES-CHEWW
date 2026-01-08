@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -49,7 +50,7 @@ class UserController extends Controller
             'no_hp' => 'required|numeric',
             'password' => 'required',
             'peran' => 'required',
-            'foto_profil' => 'required|required|image|mimes:jpg,png,jpeg',
+            'foto_profil' => 'required|image|mimes:jpg,png,jpeg',
             'alamat' => 'required',
         ]);
 
@@ -61,7 +62,7 @@ class UserController extends Controller
             'nama_user' => $request->nama_user,
             'email' => $request->email,
             'no_hp' => $request->no_hp,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'peran' => $request->peran,
             'foto_profil' => $nama_foto,
             'alamat' => $request->alamat,
@@ -94,7 +95,7 @@ class UserController extends Controller
     {
         $request->validate([
             'nama_user' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique|users,email',
             'no_hp' => 'required',
             'peran' => 'required',
             'alamat' => 'required',

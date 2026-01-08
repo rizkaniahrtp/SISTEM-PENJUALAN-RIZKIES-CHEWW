@@ -53,7 +53,15 @@
                                             });
                                         </script>
                                     @endif
-
+                                    @if ($errors->any())
+                                        <script>
+                                            Swal.fire({
+                                                title: "Error",
+                                                text: "@foreach($errors->all() as $error) {{ $error }}{{ $loop->last ? '.' : ',' }} @endforeach",
+                                                icon: "error"
+                                            });
+                                        </script>
+                                    @endif
                                     <form class="user" action="/register" method="post">
                                         @csrf
 

@@ -4,9 +4,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-3 text-gray-800">Rizkies Cheww Store🍪✨</h1>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">                     
+                    <!-- Page Heading -->                    
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">  
+                        <h1 class="h3 mb-3 text-gray-800">Rizkies Cheww Store🍪✨</h1>               
                         <form action="/inbox" method="get" class="d-none d-sm-inline-block form-inline ml-auto my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-light border-1 small" name="keywords" value="{{ request('keywords') }}" placeholder="Cari sesuatu..."
@@ -27,6 +27,15 @@
                                 title: "Berhasil",
                                 text: "{{ session()->get('success') }}",
                                 icon: "success"
+                            });
+                        </script>
+                    @endif
+                    @if (session('error'))
+                        <script>
+                            Swal.fire({
+                                title: "Gagal",
+                                text: "{{ session()->get('error') }}",
+                                icon: "error"
                             });
                         </script>
                     @endif
@@ -90,7 +99,7 @@
                                                     </div>
                                                 </form>                                                
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($i->created_at)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($i->created_at)->translatedFormat('d M Y') }}</td>
                                             <td>
                                                 <div class="d-flex">
                                                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#konfirmasi_delete{{ $i->id }}">

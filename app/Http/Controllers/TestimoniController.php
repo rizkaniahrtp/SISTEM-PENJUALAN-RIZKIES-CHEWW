@@ -17,7 +17,8 @@ class TestimoniController extends Controller
     {
         $query = $request->input('keywords');
         if ($query){
-            $testimoni = Testimoni::when($query, function ($queryBuilder) use ($query) {
+            $testimoni = Testimoni::with(['user', 'produk'])
+                ->when($query, function ($queryBuilder) use ($query) {
                 $queryBuilder->where('rating','LIKE','%'.$query.'%')
                 ->orWhere('status', 'LIKE', '%'.$query.'%')
                 ->orWhereHas('user', function ($keywords) use ($query) {
@@ -44,7 +45,7 @@ class TestimoniController extends Controller
     {
         $user = User::all();
         $produk = Produk::all();
-        return view('admin.testimoni.tambah', compact('user','produk'));
+        return view('ad min.testimoni.tambah', compact('user','produk'));
     }
 
     /**
@@ -87,6 +88,8 @@ class TestimoniController extends Controller
             'pesan'=> 'required',
             'gambar' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
+
+        $nama_gambar = null;
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
@@ -175,7 +178,7 @@ class TestimoniController extends Controller
 
      public function update_status(Request $request, $id)
     {
-        $testimoni = testimoni::findOrFail($id);
+        $testimoni = Testimoni::findOrFail($id);
         $testimoni->update([
             'status' => $request->status
         ]);

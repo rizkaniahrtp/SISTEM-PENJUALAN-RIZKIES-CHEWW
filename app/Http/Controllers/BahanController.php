@@ -92,7 +92,7 @@ class BahanController extends Controller
 
         $bahan = Bahan::findOrFail($id);
 
-        Bahan::update([
+        $bahan::update([
             'supplier_id'=> $request->supplier_id,
             'nama_bahan'=> $request->nama_bahan,
             'stok'=> $request->stok,
@@ -117,7 +117,7 @@ class BahanController extends Controller
      */
     public function update_satuan(Request $request, $id)
     {
-        $bahan = bahan::findOrFail($id);
+        $bahan = Bahan::findOrFail($id);
         $bahan->update([
             'satuan' => $request->satuan
         ]);

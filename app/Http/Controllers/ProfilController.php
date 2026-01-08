@@ -22,14 +22,14 @@ class ProfilController extends Controller
 
     public function update(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
             'nama_user'=> 'required',
             'no_hp' => 'required',
             'alamat'=> 'required',
-            'foto_profil'=> 'nullable',
+            'foto_profil'=> 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $user = User::find(Auth::user()->id);
         $user->nama_user = $request->nama_user;
         $user->no_hp = $request->no_hp;
         $user->alamat = $request->alamat;
@@ -53,7 +53,7 @@ class ProfilController extends Controller
             'pw_new'=> 'required|min:5|confirmed',
         ]);
 
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
 
         if (!Hash::check($request->pw_old, $user->password)) {
             return back()->with('error','Terdapat kesalahan, periksa password anda!');

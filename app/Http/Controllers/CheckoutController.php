@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detailTransaksi;
+use App\Models\DetailTransaksi;
 use App\Models\Keranjang;
 use App\Models\Pembayaran;
 use App\Models\Produk;
@@ -67,6 +67,7 @@ class CheckoutController extends Controller
             'metode_pengantaran' => 'required|in:diambil,diantar',
             'metode_pembayaran' => 'required|in:transfer,qris,cash',
             'detail_pengantaran' => 'required_if:metode_pengantaran,diantar',
+            'promosi_id'=> 'nullable|exists:promosis,id',
         ]);
 
         try{
@@ -107,7 +108,7 @@ class CheckoutController extends Controller
                         throw new \Exception("{$produk->nama_produk} tidak tersedia");
                     }
 
-                    detailTransaksi::create([
+                    DetailTransaksi::create([
                         'transaksi_id' => $transaksi->id,
                         'produk_id' => $produk->id,
                         'jumlah' => $k->jumlah,
@@ -129,7 +130,7 @@ class CheckoutController extends Controller
             });
 
             if($request->metode_pembayaran == 'cash'){
-                return redirect('/riwayat_transaksi')->with('succsess','Pesanan berhasil dibuat!');
+                return redirect('/riwayat_transaksi')->with('success','Pesanan berhasil dibuat!');
             } else {
                 return redirect('/riwayat_transaksi/' . $transaksi->id)->with('success', 'Pesanan Dibuat! Silakan selesaikan pembayaran.');
             }           

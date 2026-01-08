@@ -81,11 +81,11 @@ class KeranjangController extends Controller
             elseif ($aksi == 'kurang') {
                 if ($produk->jumlah > 1) {
                     $produk->jumlah -=1;
+                    $produk->save();
                 }
             }
         }
 
-        $produk->save();
         return back();
     }
 

@@ -6,7 +6,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-3 text-gray-800">Rizkies Cheww Store🍪✨</h1>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <a href="/detailTransaksi/tambah" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm">
                             <i class="fas fa-plus fa-sm text-black-50"></i> Tambah Detail Transaksi
                         </a>
@@ -30,6 +30,15 @@
                                 title: "Berhasil",
                                 text: "{{ session()->get('success') }}",
                                 icon: "success"
+                            });
+                        </script>
+                    @endif
+                    @if (session('error'))
+                        <script>
+                            Swal.fire({
+                                title: "Gagal",
+                                text: "{{ session()->get('error') }}",
+                                icon: "error"
                             });
                         </script>
                     @endif
@@ -68,11 +77,17 @@
                                         <tr>
                                             <td>{{ $loop->iteration + $detailTransaksi->firstItem() - 1 }}</td>
                                             <td>{{ $dt->transaksi->id }}</td>
-                                            <td><img src="{{ asset('image/produk/' . $dt->produk->foto_produk) }}" width="65"></td>
+                                            <td class="text-center">
+                                                @if($dt->produk && $dt->produk->foto_produk)
+                                                    <img src="{{ asset('image/produk/' . $dt->produk->foto_produk) }}" width="60" class="img-thumbnail">
+                                                @else
+                                                    <span class="badge badge-secondary">No Image</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $dt->produk->nama_produk }}</td>
-                                            <td>{{ $dt->harga_satuan }}</td>
+                                            <td class="text-right">Rp {{ number_format($dt->harga_satuan, 0, ',', '.') }}</td>
                                             <td>{{ number_format($dt->jumlah) }}</td>
-                                            <td>Rp{{ number_format($dt->subtotal) }}</td>
+                                            <td class="text-right">Rp {{ number_format($dt->subtotal, 0, ',', '.') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($dt->created_at)->format('d M Y') }}</td>
                                         </tr>
                                         @include('admin.detail_transaksi.konfirmasi_delete')

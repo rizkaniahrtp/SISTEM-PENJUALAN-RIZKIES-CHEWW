@@ -41,7 +41,7 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-         $request-> validate([
+        $request->validate([
             'nama_supplier' => 'required',
             'no_hp' => 'required',
             'alamat' => 'required',

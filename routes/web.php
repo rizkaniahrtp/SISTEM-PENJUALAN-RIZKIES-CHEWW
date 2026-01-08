@@ -118,7 +118,7 @@ Route::put('/bahan/update_satuan/{id}', [BahanController::class,'update_satuan']
 Route::get('/admin/profil', [HomeController::class, 'profil_view'])->middleware('peran:admin');
 Route::post('/admin/profil/{id}', [HomeController::class, 'update_profil'])->middleware('peran:admin');
 Route::get('/admin/ubah_password', [HomeController::class, 'ubah_password_view'])->middleware('peran:admin');
-Route::post('/admin/ubah_password{id}', [HomeController::class, 'ubah_password'])->middleware('peran:admin');
+Route::post('/admin/ubah_password/{id}', [HomeController::class, 'ubah_password'])->middleware('peran:admin');
 
 // ============ U M U M ==============
 // INBOX

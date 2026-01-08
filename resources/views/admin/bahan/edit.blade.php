@@ -13,7 +13,7 @@
             </div>
 
             <div class="card-body">
-                <form action="/bahan/update/{{ $bahan->id }}" method="POST" enctype="multipart/form-data">
+                <form action="/bahan/update/{{ $bahan->id }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -40,7 +40,7 @@
 
                 <div class="mb-3">
                     <label>Stok</label>
-                    <input type="decimal" name="stok" class="form-control @error('stok') is-invalid @enderror" value="{{ old('stok', $bahan->stok) }}" required>
+                    <input type="number" name="stok" class="form-control @error('stok') is-invalid @enderror" value="{{ old('stok', $bahan->stok) }}" required>
                     @error('stok')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

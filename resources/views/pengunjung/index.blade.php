@@ -240,6 +240,15 @@
                                 });
                             </script>
                         @endif
+                        @if (session('error'))
+                            <script>
+                                Swal.fire({
+                                    title: "Gagal",
+                                    text: "{{ session('error') }}",
+                                    icon: "error"
+                                });
+                            </script>
+                        @endif
 
                         <form action="/inbox/store" method="POST">
                             @csrf 

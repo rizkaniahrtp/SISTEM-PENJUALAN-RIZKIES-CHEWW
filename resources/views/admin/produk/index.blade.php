@@ -35,6 +35,15 @@
                             });
                         </script>
                     @endif
+                    @if (session('error'))
+                        <script>
+                            Swal.fire({
+                                title: "Gagal",
+                                text: "{{ session()->get('error') }}",
+                                icon: "error"
+                            });
+                        </script>
+                    @endif
                             
                     <div class="card shadow mb-4 mt-4">
                         <div class="card-header py-3">

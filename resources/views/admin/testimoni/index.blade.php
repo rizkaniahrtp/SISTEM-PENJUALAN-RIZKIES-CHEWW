@@ -30,6 +30,15 @@
                 });
             </script>          
         @endif
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    title: "Gagal",
+                    text: "{{ session()->get('error') }}",          
+                    icon: "error"
+                });
+            </script>
+        @endif
 
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
@@ -68,7 +77,14 @@
                                         <td>{{ $tm->user->nama_user }}</td>
                                         <td>{{ $tm->produk->nama_produk }}</td>
                                         <td>{{ $tm->pesan }}</td>
-                                        <td><img src="{{ asset('image/testimoni/' . $tm->gambar) }}" width="65"></td>
+                                        <td>
+                                            @php
+                                            $path_baru = 'image/testimoni/' . $tm->gambar;
+                                            @endphp
+                                            @if (!empty($tm->gambar) && file_exists(public_path($path_baru)))
+                                            <img src="{{ asset($path_baru) }}" width="65" style="border-radius: 5px; object-fit: cover;">
+                                            @endif
+                                        </td>
                                         <td>{{ $tm->rating }}/5</td>
                                         <td style="min-width: 130px;">
                                                 <form action="/testimoni/update_status/{{ $tm->id }}" method="POST">

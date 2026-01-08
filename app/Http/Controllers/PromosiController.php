@@ -63,7 +63,7 @@ class PromosiController extends Controller
             'status'=> $request->status,
         ]);
 
-        return redirect('/promosi')->with('succes', 'Data Berhasil Ditambahkan'); 
+        return redirect('/promosi')->with('success', 'Data Berhasil Ditambahkan'); 
     }
 
     /**
@@ -112,7 +112,7 @@ class PromosiController extends Controller
 
         $promosi->save();
 
-        return redirect('/promosi')->with('succes','Data Berhasil Diupdate!');
+        return redirect('/promosi')->with('success','Data Berhasil Diupdate!');
     }
 
     /**
@@ -122,7 +122,7 @@ class PromosiController extends Controller
     {
         $promosi = Promosi::findOrFail($id);
         $promosi->delete();
-        return redirect('/promosi')->with('succes','Data berhasil dihapus!');
+        return redirect('/promosi')->with('success','Data berhasil dihapus!');
     }
 
     public function update_status(Request $request, $id)
@@ -132,8 +132,6 @@ class PromosiController extends Controller
             'status' => $request->status
         ]);
         
-        $promosi->save();
-
         return redirect('/promosi')->with('success', 'Status Berhasil Diupdate!');
     }
 }
